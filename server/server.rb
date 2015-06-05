@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+require 'json'
 
 Bundler.require(:default)
 
@@ -10,6 +11,9 @@ get '/' do
 end
 
 post '/upload' do
+  content_type :json
+
+  sleep 1
 
 	if params[:file]
 		save_path = File.join(File.dirname(__FILE__), '/public/uploads/', params[:file][:filename])
@@ -18,7 +22,10 @@ post '/upload' do
 			f.write params[:file][:tempfile].read
 		end
 
-    200
+    {
+      status: 200,
+      url: File.join('/uploads/', params[:file][:filename]).to_s 
+    }.to_json
   else
     500
 	end
