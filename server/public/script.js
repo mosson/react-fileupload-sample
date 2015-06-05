@@ -242,7 +242,8 @@ var LegacyUploadForm = (function (_React$Component) {
             "form",
             _extends({}, this.props, { target: this.serialId, method: "post", ref: "form", encType: "multipart/form-data" }),
             React.createElement("input", { ref: "file", onChange: this.submitHdl.bind(this), type: "file", accept: "image/*", name: "file" })
-          )
+          ),
+          this.props.children
         );
       }
     }
@@ -296,7 +297,8 @@ var LegacyUploadForm8 = (function (_LegacyUploadForm) {
               { type: "submit" },
               "Send"
             )
-          )
+          ),
+          this.props.children
         );
       }
     }

@@ -46,6 +46,8 @@ class LegacyUploadForm extends React.Component {
         <form {...this.props} target={this.serialId} method="post" ref="form" encType="multipart/form-data">
           <input ref="file" onChange={this.submitHdl.bind(this)} type="file" accept="image/*" name="file"/>
         </form>
+
+        {this.props.children}
       </div>
     );
   }

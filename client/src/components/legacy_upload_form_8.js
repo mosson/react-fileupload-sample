@@ -15,6 +15,8 @@ class LegacyUploadForm8 extends LegacyUploadForm {
           <input ref="file" type="file" accept="image/*" name="file"/>
           <button type="submit">Send</button>
         </form>
+
+        {this.props.children}
       </div>
     );
   }
