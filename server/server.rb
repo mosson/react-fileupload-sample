@@ -11,8 +11,6 @@ get '/' do
 end
 
 post '/upload' do
-  content_type :json
-
   sleep 1
 
 	if params[:file]
@@ -24,7 +22,7 @@ post '/upload' do
 
     {
       status: 200,
-      url: File.join('/uploads/', params[:file][:filename]).to_s 
+      url: File.join('/uploads/', params[:file][:filename]).to_s
     }.to_json
   else
     500

@@ -40,17 +40,17 @@ class AppComponent extends React.Component {
       );
     });
 
-    var completes =  _.map(this.state.completes, (response) => {
+    var completes = _.map(this.state.completes, (response, i) => {
       var url = '';
       try {
-        url = JSON.parse(response).url
+        url = JSON.parse(response).url;
       } catch(e) {
         url = '';
       }
 
       return (
-        <img src={url}/>
-      )
+        <img key={i} src={url}/>
+      );
     });
 
 

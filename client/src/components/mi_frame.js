@@ -10,10 +10,11 @@ class MiFrame extends React.Component {
 
   loadHdl () {
     const iframe = React.findDOMNode(this);
-    const doc = iframe.contentDocument;
-    const html = doc.children[0];
 
-    if( this.props.onResponse ) this.props.onResponse(html.textContent);
+    const doc = iframe.contentDocument;
+    const html = doc.firstChild;
+
+    if( this.props.onResponse ) this.props.onResponse(html.textContent || html.innerText);
 
     this.redraw();
   }
@@ -27,7 +28,12 @@ class MiFrame extends React.Component {
   componentDidMount () {
     const iframe = React.findDOMNode(this);
     iframe.removeEventListener('load', this.bindedLoadHdl);
-    iframe.addEventListener('load', this.bindedLoadHdl);
+
+    if( iframe.attachEvent ) {
+      iframe.attachEvent('onload', this.bindedLoadHdl);
+    } else {
+      iframe.addEventListener('load', this.bindedLoadHdl);
+    }
 
     this.renderFrameContents();
   }
@@ -47,7 +53,7 @@ class MiFrame extends React.Component {
 
   render () {
     return (
-      <iframe target={this.props.target} />
+      <iframe {...this.props} />
     );
   }
 
@@ -72,12 +78,7 @@ class MiFrame extends React.Component {
   }
 }
 
-MiFrame.defaultProps = {
-  target: '_self'
-};
-
 MiFrame.propTypes = {
-  target: React.PropTypes.string,
   onResponse: React.PropTypes.func
 };
 

@@ -6,6 +6,7 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var eslint = require('gulp-eslint');
 var karma = require('karma');
+var uglify = require('gulp-uglify');
 
 gulp.task("build", function () {
   browserify({
@@ -17,6 +18,12 @@ gulp.task("build", function () {
     .bundle()
     .pipe(source("script.js"))
     .pipe(gulp.dest("./server/public"))
+});
+
+gulp.task('compress', function() {
+  return gulp.src('server/public/scirpt.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('server/public'));
 });
 
 gulp.task("lint", function () {

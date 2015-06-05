@@ -3,10 +3,15 @@
 const React = require('react/addons');
 const UploadActionCreator = require('action_creators/upload_action_creator');
 const LegacyUploadForm = require('components/legacy_upload_form');
+const LegacyUploadForm8 = require('components/legacy_upload_form_8');
 
 class UploadForm extends React.Component {
   isLegacy() {
     return window.FormData === undefined;
+  }
+
+  isLegacy8() {
+    return document.documentMode === 8;
   }
 
   submitHdl() {
@@ -27,6 +32,12 @@ class UploadForm extends React.Component {
     UploadActionCreator.upload(this.props.action, file.name, fileData);
   }
 
+  legacyForm8() {
+    return (
+      <LegacyUploadForm8 {...this.props}/>
+    );
+  }
+
   legacyForm() {
     return (
       <LegacyUploadForm {...this.props}/>
@@ -42,9 +53,14 @@ class UploadForm extends React.Component {
     );
   }
 
+  resolveForm () {
+    if( !this.isLegacy() ) return this.modernForm();
+    if( !this.isLegacy8() ) return this.legacyForm();
+    return this.legacyForm8();
+  }
+
   render () {
-    //const form = this.isLegacy() ? this.legacyForm() : this.modernForm();
-    const form = this.legacyForm();
+    const form = this.resolveForm();
 
     return form;
   }
