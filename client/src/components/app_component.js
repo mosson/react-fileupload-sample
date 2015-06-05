@@ -45,8 +45,10 @@ class AppComponent extends React.Component {
       try {
         url = JSON.parse(response).url;
       } catch(e) {
-        url = '';
+        url = null;
       }
+
+      if( !url ) return;
 
       return (
         <img key={i} src={url}/>

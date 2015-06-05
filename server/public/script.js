@@ -143,8 +143,10 @@ var AppComponent = (function (_React$Component) {
           try {
             url = JSON.parse(response).url;
           } catch (e) {
-            url = "";
+            url = null;
           }
+
+          if (!url) return;
 
           return React.createElement("img", { key: i, src: url });
         });
